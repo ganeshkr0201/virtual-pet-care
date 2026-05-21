@@ -71,6 +71,7 @@
         </div>
         <div class="divide-y divide-slate-50 dark:divide-slate-800">
             @forelse($today_logs as $log)
+            @if(!$log->reminder) @continue @endif
             <div class="px-5 py-3.5 flex items-center gap-4 hover:bg-slate-50/60 dark:hover:bg-slate-800/40 transition-colors">
                 <div class="w-10 h-10 rounded-xl flex items-center justify-center text-lg flex-shrink-0
                     {{ $log->status === 'completed' ? 'bg-emerald-50' : ($log->status === 'missed' ? 'bg-red-50' : 'bg-primary-50') }}">

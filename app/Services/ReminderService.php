@@ -18,13 +18,18 @@ class ReminderService
         $reminder = $this->reminderRepository->create($data);
         ActivityLog::log('created', "Created reminder: {$reminder->title}", $reminder);
 
-        // Fire an immediate in-app notification so the bell lights up
-        $reminder->load('pet');
-        $reminder->user->notify(new \App\Notifications\ReminderNotification($reminder));
+        // PRODUCTION FIX: Instantly generate today's log so the running worker can see it.
+        \App\Models\ReminderLog::firstOrCreate([
+            'reminder_id' => $reminder->id,
+            'user_id' => $reminder->user_id,
+            'scheduled_date' => today(),
+        ], [
+            'scheduled_time' => $reminder->reminder_time,
+            'status' => 'pending',
+        ]);
 
         return $reminder;
     }
-
     public function updateReminder(Reminder $reminder, array $data): Reminder
     {
         $updated = $this->reminderRepository->update($reminder, $data);
