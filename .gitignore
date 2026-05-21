@@ -1,0 +1,66 @@
+# ─── Laravel ─────────────────────────────────────────────────────
+/vendor/
+/node_modules/
+/public/build/
+/public/hot
+/public/storage
+/storage/*.key
+/storage/pail/
+/storage/app/private/
+/storage/framework/cache/
+/storage/framework/sessions/
+/storage/framework/testing/
+/storage/framework/views/
+/storage/logs/
+/bootstrap/cache/*.php
+
+# ─── Environment & Secrets ───────────────────────────────────────
+.env
+.env.*
+!.env.example
+auth.json
+
+# ─── SQLite database (use migrations instead) ────────────────────
+/database/database.sqlite
+/database/*.sqlite
+
+# ─── Testing ─────────────────────────────────────────────────────
+.phpunit.result.cache
+/.phpunit.cache/
+/coverage/
+
+# ─── IDE & Editor ────────────────────────────────────────────────
+.idea/
+.vscode/
+.nova/
+.zed/
+.cursor/
+.codex/
+*.swp
+*.swo
+*~
+.phpactor.json
+_ide_helper.php
+_ide_helper_models.php
+.phpstorm.meta.php
+
+# ─── OS files ────────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ─── Logs ────────────────────────────────────────────────────────
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ─── Misc ────────────────────────────────────────────────────────
+Homestead.json
+Homestead.yaml
+/public/fonts-manifest.dev.json

@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Virtual Pet Care — Feature Guide</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Segoe UI',system-ui,sans-serif;background:#f8fafc;color:#1e293b;line-height:1.6}
+  a{color:#4F46E5;text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  /* NAV */
+  nav{background:#fff;border-bottom:1px solid #e2e8f0;padding:1rem 2rem;position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+  .logo{display:flex;align-items:center;gap:.75rem;font-weight:700;font-size:1.1rem;color:#0f172a}
+  .logo-icon{width:2.25rem;height:2.25rem;background:linear-gradient(135deg,#4F46E5,#7C3AED);border-radius:.75rem;display:flex;align-items:center;justify-content:center;font-size:1.1rem}
+  .nav-links{display:flex;gap:1.5rem;font-size:.875rem;color:#475569}
+  .nav-links a{color:#475569;font-weight:500}
+
+  /* HERO */
+  .hero{background:linear-gradient(135deg,#4F46E5 0%,#7C3AED 100%);color:#fff;padding:4rem 2rem;text-align:center}
+  .hero h1{font-size:2.5rem;font-weight:800;margin-bottom:1rem}
+  .hero p{font-size:1.125rem;opacity:.9;max-width:600px;margin:0 auto 2rem}
+  .hero-badges{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap}
+  .badge{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);padding:.375rem .875rem;border-radius:9999px;font-size:.8rem;font-weight:500}
+
+  /* ACCOUNTS */
+  .accounts{background:#fff;border-bottom:1px solid #e2e8f0;padding:1.5rem 2rem}
+  .accounts-inner{max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  .account-card{border:2px solid #e2e8f0;border-radius:1rem;padding:1rem 1.25rem;display:flex;align-items:center;gap:1rem}
+  .account-card.admin{border-color:#4F46E5;background:#eef2ff}
+  .account-card.demo{border-color:#14B8A6;background:#f0fdfa}
+  .account-icon{font-size:1.75rem}
+  .account-label{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:#64748b;margin-bottom:.25rem}
+  .account-email{font-weight:600;color:#0f172a;font-size:.9rem}
+  .account-pass{font-size:.8rem;color:#64748b;margin-top:.125rem}
+  .account-role{display:inline-block;padding:.125rem .5rem;border-radius:9999px;font-size:.7rem;font-weight:600;margin-top:.375rem}
+  .role-admin{background:#e0e7ff;color:#4338ca}
+  .role-owner{background:#ccfbf1;color:#0f766e}
+
+  /* MAIN */
+  .container{max-width:960px;margin:0 auto;padding:3rem 2rem}
+  .section-title{font-size:1.5rem;font-weight:700;color:#0f172a;margin-bottom:.375rem}
+  .section-sub{color:#64748b;font-size:.9rem;margin-bottom:2rem}
+  .divider{border:none;border-top:1px solid #e2e8f0;margin:3rem 0}
+
+  /* FEATURE CARDS */
+  .features-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem;margin-bottom:2rem}
+  .feature-card{background:#fff;border:1px solid #e2e8f0;border-radius:1rem;padding:1.5rem;transition:box-shadow .2s,transform .2s}
+  .feature-card:hover{box-shadow:0 8px 25px rgba(0,0,0,.08);transform:translateY(-2px)}
+  .feature-icon{font-size:2rem;margin-bottom:.75rem}
+  .feature-title{font-weight:700;font-size:1rem;color:#0f172a;margin-bottom:.375rem}
+  .feature-desc{font-size:.85rem;color:#475569;line-height:1.6}
+
+  /* HOW TO USE */
+  .how-section{margin-bottom:3rem}
+  .how-header{display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem}
+  .how-icon{width:3rem;height:3rem;border-radius:.875rem;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
+  .how-title{font-size:1.2rem;font-weight:700;color:#0f172a}
+  .how-subtitle{font-size:.85rem;color:#64748b}
+  .steps{list-style:none;display:flex;flex-direction:column;gap:.75rem}
+  .step{display:flex;align-items:flex-start;gap:1rem;background:#fff;border:1px solid #e2e8f0;border-radius:.875rem;padding:1rem 1.25rem}
+  .step-num{width:1.75rem;height:1.75rem;background:#4F46E5;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0;margin-top:.1rem}
+  .step-content{flex:1}
+  .step-title{font-weight:600;font-size:.9rem;color:#0f172a;margin-bottom:.25rem}
+  .step-desc{font-size:.82rem;color:#64748b}
+  .step-url{display:inline-block;margin-top:.375rem;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:.375rem;padding:.125rem .5rem;font-size:.75rem;font-family:monospace;color:#4F46E5}
+
+  /* TIPS */
+  .tip{background:#fffbeb;border:1px solid #fde68a;border-radius:.875rem;padding:1rem 1.25rem;display:flex;gap:.75rem;margin-top:1rem}
+  .tip-icon{font-size:1.1rem;flex-shrink:0}
+  .tip-text{font-size:.83rem;color:#78350f}
+
+  /* TABLE */
+  table{width:100%;border-collapse:collapse;font-size:.85rem;background:#fff;border-radius:1rem;overflow:hidden;border:1px solid #e2e8f0}
+  th{background:#f8fafc;padding:.75rem 1rem;text-align:left;font-weight:600;color:#374151;border-bottom:1px solid #e2e8f0}
+  td{padding:.75rem 1rem;border-bottom:1px solid #f1f5f9;color:#475569}
+  tr:last-child td{border-bottom:none}
+  tr:hover td{background:#f8fafc}
+  code{background:#f1f5f9;padding:.125rem .375rem;border-radius:.25rem;font-family:monospace;font-size:.8rem;color:#4F46E5}
+
+  /* FOOTER */
+  footer{background:#0f172a;color:#94a3b8;text-align:center;padding:2rem;font-size:.85rem}
+  footer strong{color:#fff}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">
+    <div class="logo-icon">🐾</div>
+    Virtual Pet Care
+  </div>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#how-to-use">How to Use</a>
+    <a href="#api">API</a>
+    <a href="#tips">Tips</a>
+    <a href="http://localhost:8000" target="_blank">Open App →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>Virtual Pet Care — Feature Guide</h1>
+  <p>Everything you need to know about managing your pets' health, reminders, appointments, and more.</p>
+  <div class="hero-badges">
+    <span class="badge">Laravel 11</span>
+    <span class="badge">Tailwind CSS v4</span>
+    <span class="badge">Alpine.js</span>
+    <span class="badge">22 Tests Passing</span>
+    <span class="badge">REST API</span>
+  </div>
+</div>
+
+<!-- DEMO ACCOUNTS -->
+<div class="accounts">
+  <div class="accounts-inner">
+    <div class="account-card admin">
+      <div class="account-icon">👑</div>
+      <div>
+        <div class="account-label">Admin Account</div>
+        <div class="account-email">admin@virtualpetcare.com</div>
+        <div class="account-pass">Password: <strong>password</strong></div>
+        <span class="account-role role-admin">Admin — Full access</span>
+      </div>
+    </div>
+    <div class="account-card demo">
+      <div class="account-icon">🐾</div>
+      <div>
+        <div class="account-label">Demo Pet Owner</div>
+        <div class="account-email">demo@virtualpetcare.com</div>
+        <div class="account-pass">Password: <strong>password</strong></div>
+        <span class="account-role role-owner">Pet Owner — Has demo data</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- FEATURES OVERVIEW -->
+<div id="features">
+  <div class="section-title">All Features</div>
+  <div class="section-sub">A complete overview of every module in the application</div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">🔐</div>
+      <div class="feature-title">Authentication</div>
+      <div class="feature-desc">Register, login, logout, forgot password, reset password, and email verification. Role-based access for Admin and Pet Owner.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🐕</div>
+      <div class="feature-title">Pet Management</div>
+      <div class="feature-desc">Add unlimited pets with photos, species, breed, age, weight, vet info, allergies, medical history, and activity level.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">⏰</div>
+      <div class="feature-title">Daily Reminders</div>
+      <div class="feature-desc">10 reminder types: feeding, walking, exercise, grooming, medication, vet appointment, vaccination, training, water, and other. Daily/weekly/monthly repeat.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <div class="feature-title">Dashboard Analytics</div>
+      <div class="feature-desc">Today's progress, weekly activity bar chart, monthly completion donut chart, upcoming appointments and vaccination alerts.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🏥</div>
+      <div class="feature-title">Health Tracker</div>
+      <div class="feature-desc">Log medical records (checkup, illness, surgery, prescription, weight), vaccinations with due-date alerts, and weight history chart.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📅</div>
+      <div class="feature-title">Calendar</div>
+      <div class="feature-desc">FullCalendar.js integration showing all reminders and appointments. Switch between month, week, and list views.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔔</div>
+      <div class="feature-title">Notifications</div>
+      <div class="feature-desc">Real-time in-app notification bell with unread count. Auto-refreshes every 30 seconds. Mark individual or all as read.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📋</div>
+      <div class="feature-title">Appointments</div>
+      <div class="feature-desc">Schedule vet visits, grooming, vaccinations, dental, and surgery appointments. Track status: scheduled, completed, cancelled, missed.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">👤</div>
+      <div class="feature-title">Profile Settings</div>
+      <div class="feature-desc">Update name, email, phone, timezone, avatar. Change password. Toggle email notifications, push notifications, and dark mode.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">👑</div>
+      <div class="feature-title">Admin Panel</div>
+      <div class="feature-desc">Platform stats, user management (activate/deactivate), monthly analytics charts, and reports. Accessible only to admin role.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🌙</div>
+      <div class="feature-title">Dark Mode</div>
+      <div class="feature-desc">Toggle dark/light mode from the top bar. Preference is saved in localStorage and persists across sessions.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔌</div>
+      <div class="feature-title">REST API</div>
+      <div class="feature-desc">Full API under /api/v1 with Sanctum token auth. Endpoints for auth, pets, reminders, dashboard, and notifications.</div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- HOW TO USE -->
+<div id="how-to-use">
+  <div class="section-title">How to Use Each Feature</div>
+  <div class="section-sub">Step-by-step instructions for every module</div>
+
+  <!-- 1. Getting Started -->
+  <div class="how-section">
+    <div class="how-header">
+      <div class="how-icon" style="background:#eef2ff">🚀</div>
+      <div>
+        <div class="how-title">1. Getting Started</div>
+        <div class="how-subtitle">Register and set up your account</div>
+      </div>
+    </div>
+    <ul class="steps">
+      <li class="step"><div class="step-num">1</div><div class="step-content"><div class="step-title">Open the app</div><div class="step-desc">Go to <span class="step-url">http://localhost:8000</span> — you'll see the landing page.</div></div></li>
+      <li class="step"><div class="step-num">2</div><div class="step-content"><div class="step-title">Register or use demo account</div><div class="step-desc">Click "Get started free" to register, or use <strong>demo@virtualpetcare.com / password</strong> to log in with pre-loaded data.</div></div></li>
+      <li class="step"><div class="step-num">3</div><div class="step-content"><div class="step-title">You land on the Dashboard</div><div class="step-desc">The dashboard shows today's reminders, completion stats, upcoming appointments, and your pets. Everything starts here.</div></div></li>
+    </ul>
+  </div>
+
+  <!-- 2. Pets -->
+  <div class="how-section">
+    <div class="how-header">
+      <div class="how-icon" style="background:#f5f3ff">🐕</div>
+      <div>
+        <div class="how-title">2. Managing Pets</div>
+        <div class="how-subtitle">Add and manage your pet profiles</div>
+      </div>
+    </div>
+    <ul class="steps">
+      <li class="step"><div class="step-num">1</div><div class="step-content"><div class="step-title">Go to My Pets</div><div class="step-desc">Click "My Pets" in the sidebar. <span class="step-url">/pets</span></div></div></li>
+      <li class="step"><div class="step-num">2</div><div class="step-content"><div class="step-title">Add a new pet</div><div class="step-desc">Click "Add Pet". Fill in name, species, breed, gender, date of birth, weight, and activity level. Upload a photo. Add vet info and medical notes.</div></div></li>
+      <li class="step"><div class="step-num">3</div><div class="step-content"><div class="step-title">View pet profile</div><div class="step-desc">Click "View" on any pet card to see their full profile — age, vaccinations, reminders, vet info, and quick action buttons.</div></div></li>
+      <li class="step"><div class="step-num">4</div><div class="step-content"><div class="step-title">Filter by species</div><div class="step-desc">Use the species badges at the top of the pets list to filter by dog, cat, bird, etc.</div></div></li>
+    </ul>
+    <div class="tip"><div class="tip-icon">💡</div><div class="tip-text">The pet age is calculated automatically from the date of birth. Weight is updated automatically when you log a weight record in Health Tracker.</div></div>
+  </div>
+
+  <!-- 3. Reminders -->
+  <div class="how-section">
+    <div class="how-header">
+      <div class="how-icon" style="background:#fff7ed">⏰</div>
+      <div>
+        <div class="how-title">3. Daily Reminders</div>
+        <div class="how-subtitle">Set up and manage care schedules</div>
+      </div>
+    </div>
+    <ul class="steps">
+      <li class="step"><div class="step-num">1</div><div class="step-content"><div class="step-title">Go to Reminders</div><div class="step-desc">Click "Reminders" in the sidebar. <span class="step-url">/reminders</span></div></div></li>
+      <li class="step"><div class="step-num">2</div><div class="step-content"><div class="step-title">Create a reminder</div><div class="step-desc">Click "New Reminder". Select the pet, choose a type (feeding, medication, walking, etc.), set the time, start date, and repeat schedule (daily/weekly/monthly).</div></div></li>
+      <li class="step"><div class="step-num">3</div><div class="step-content"><div class="step-title">Mark as done</div><div class="step-desc">On the "Today's Schedule" section, click the circle button next to a reminder to mark it complete. It turns green instantly.</div></div></li>
+      <li class="step"><div class="step-num">4</div><div class="step-content"><div class="step-title">Weekly repeat</div><div class="step-desc">When creating a reminder with "Weekly" repeat, select which days of the week it should fire (Mon, Tue, Wed, etc.).</div></div></li>
+      <li class="step"><div class="step-num">5</div><div class="step-content"><div class="step-title">Filter reminders</div><div class="step-desc">Use the dropdowns to filter by type (feeding, medication, etc.), by pet, or by active/inactive status.</div></div></li>
+    </ul>
+    <div class="tip"><div class="tip-icon">💡</div><div class="tip-text">Missed reminders are automatically marked at 23:55 each day by the scheduler. You can see your completion rate on the dashboard.</div></div>
+  </div>
+
+  <!-- 4. Calendar -->
+  <div class="how-section">
+    <div class="how-header">
+      <div class="how-icon" style="background:#f0fdf4">📅</div>
+      <div>
+        <div class="how-title">4. Calendar View</div>
+        <div class="how-subtitle">See all reminders and appointments in one place</div>
+      </div>
+    </div>
+    <ul class="steps">
+      <li class="step"><div class="step-num">1</div><div class="step-content"><div class="step-title">Open Calendar</div><div class="step-desc">Click "Calendar" in the sidebar. <span class="step-url">/calendar</span></div></div></li>
+      <li class="step"><div class="step-num">2</div><div class="step-content"><div class="step-title">Switch views</div><div class="step-desc">Use the top-right buttons to switch between Month, Week, and List views.</div></div></li>
+      <li class="step"><div class="step-num">3</div><div class="step-content"><div class="step-title">Click an event</div><div class="step-desc">Click any event on the calendar to see its details in a popup. Purple = reminder, Teal = appointment.</div></div></li>
+    </ul>
+  </div>
+</div>
+
+<hr class="divider">
+
+  <!-- 5. Health Tracker -->
+  <div class="how-section">
+    <div class="how-header">
+      <div class="how-icon" style="background:#fef2f2">🏥</div>
+      <div>
+        <div class="how-title">5. Health Tracker</div>
+        <div class="how-subtitle">Log medical records and vaccinations</div>
+      </div>
+    </div>
+    <ul class="steps">
+      <li class="step"><div class="step-num">1</div><div class="step-content"><div class="step-title">Go to Health Tracker</div><div class="step-desc">Click "Health Tracker" in the sidebar. <span class="step-url">/health</span> — you'll see all your pets with their record counts.</div></div></li>
+      <li class="step"><div class="step-num">2</div><div class="step-content"><div class="step-title">Select a pet</div><div class="step-desc">Click on a pet card to open their health page. You'll see the weight history chart (if 2+ weight logs exist), medical records, and vaccinations.</div></div></li>
+      <li class="step"><div class="step-num">3</div><div class="step-content"><div class="step-title">Add a medical record</div><div class="step-desc">Click "+ Add Medical Record" to expand the form. Choose type (checkup, illness, surgery, weight log, etc.), fill in details, and optionally attach a PDF or image.</div></div></li>
+      <li class="step"><div class="step-num">4</div><div class="step-content"><div class="step-title">Add a vaccination</div><div class="step-desc">Click the "Vaccinations" tab, then "+ Add Vaccination Record". Enter the vaccine name, date given, and next due date. The system will alert you when it's due.</div></div></li>
+      <li class="step"><div class="step-num">5</div><div class="step-content"><div class="step-title">Weight chart</div><div class="step-desc">Every time you log a "Weight Log" medical record, the weight history chart updates automatically.</div></div></li>
+    </ul>
+    <div class="tip"><div class="tip-icon">⚠️</div><div class="tip-text">Overdue vaccinations show a red "Overdue" badge. Vaccinations due within 30 days show an amber "Due soon" badge on the dashboard.</div></div>
+  </div>
+
+  <!-- 6. Appointments -->
+  <div class="how-section">
+    <div class="how-header">
+      <div class="how-icon" style="background:#f0fdfa">📋</div>
+      <div>
+        <div class="how-title">6. Appointments</div>
+        <div class="how-subtitle">Schedule and track vet visits</div>
+      </div>
+    </div>
+    <ul class="steps">
+      <li class="step"><div class="step-num">1</div><div class="step-content"><div class="step-title">Go to Appointments</div><div class="step-desc">Click "Appointments" in the sidebar. <span class="step-url">/appointments</span></div></div></li>
+      <li class="step"><div class="step-num">2</div><div class="step-content"><div class="step-title">Schedule an appointment</div><div class="step-desc">Click "New Appointment". Select the pet, type (checkup, vaccination, grooming, etc.), date/time, vet name, and clinic details.</div></div></li>
+      <li class="step"><div class="step-num">3</div><div class="step-content"><div class="step-title">Update status</div><div class="step-desc">After the appointment, click "Edit" and change the status to "Completed", "Cancelled", or "Missed".</div></div></li>
+    </ul>
+  </div>
+
+  <!-- 7. Notifications -->
+  <div class="how-section">
+    <div class="how-header">
+      <div class="how-icon" style="background:#fffbeb">🔔</div>
+      <div>
+        <div class="how-title">7. Notifications</div>
+        <div class="how-subtitle">Stay on top of reminders and alerts</div>
+      </div>
+    </div>
+    <ul class="steps">
+      <li class="step"><div class="step-num">1</div><div class="step-content"><div class="step-title">Bell icon in top bar</div><div class="step-desc">The 🔔 bell in the top-right shows your unread count. Click it to see the latest 10 notifications. It auto-refreshes every 30 seconds.</div></div></li>
+      <li class="step"><div class="step-num">2</div><div class="step-content"><div class="step-title">Mark as read</div><div class="step-desc">Click any notification in the dropdown to mark it as read. Or click "Mark all read" to clear all at once.</div></div></li>
+      <li class="step"><div class="step-num">3</div><div class="step-content"><div class="step-title">Full notification center</div><div class="step-desc">Click "See all notifications" or "Notifications" in the sidebar to see your full history. <span class="step-url">/notifications</span></div></div></li>
+      <li class="step"><div class="step-num">4</div><div class="step-content"><div class="step-title">When are notifications created?</div><div class="step-desc">A notification is created when: you add a reminder, the scheduler fires (every 5 min), or a vaccination is due within 7 days.</div></div></li>
+    </ul>
+    <div class="tip"><div class="tip-icon">💡</div><div class="tip-text">Notifications are stored in the database. Email notifications are sent when MAIL_MAILER=smtp and a valid Gmail App Password is set in .env.</div></div>
+  </div>
+
+  <!-- 8. Profile -->
+  <div class="how-section">
+    <div class="how-header">
+      <div class="how-icon" style="background:#f8fafc">👤</div>
+      <div>
+        <div class="how-title">8. Profile & Settings</div>
+        <div class="how-subtitle">Manage your account preferences</div>
+      </div>
+    </div>
+    <ul class="steps">
+      <li class="step"><div class="step-num">1</div><div class="step-content"><div class="step-title">Open Profile</div><div class="step-desc">Click your avatar in the top-right or "Profile" in the sidebar. <span class="step-url">/profile/edit</span></div></div></li>
+      <li class="step"><div class="step-num">2</div><div class="step-content"><div class="step-title">Update info</div><div class="step-desc">Change your name, email, phone, timezone, and upload a new avatar photo.</div></div></li>
+      <li class="step"><div class="step-num">3</div><div class="step-content"><div class="step-title">Change password</div><div class="step-desc">Scroll to the "Change Password" section. Enter your current password and new password.</div></div></li>
+      <li class="step"><div class="step-num">4</div><div class="step-content"><div class="step-title">Notification preferences</div><div class="step-desc">Toggle email notifications, push notifications, and dark mode on/off.</div></div></li>
+    </ul>
+  </div>
+
+  <!-- 9. Admin Panel -->
+  <div class="how-section">
+    <div class="how-header">
+      <div class="how-icon" style="background:#eef2ff">👑</div>
+      <div>
+        <div class="how-title">9. Admin Panel</div>
+        <div class="how-subtitle">Platform management (admin role only)</div>
+      </div>
+    </div>
+    <ul class="steps">
+      <li class="step"><div class="step-num">1</div><div class="step-content"><div class="step-title">Log in as admin</div><div class="step-desc">Use <strong>admin@virtualpetcare.com / password</strong>. The "Admin Panel" link appears in the sidebar.</div></div></li>
+      <li class="step"><div class="step-num">2</div><div class="step-content"><div class="step-title">Admin Dashboard</div><div class="step-desc">See total users, active pets, reminders completed today, and open feedback. Includes weekly registrations and species distribution charts. <span class="step-url">/admin/dashboard</span></div></div></li>
+      <li class="step"><div class="step-num">3</div><div class="step-content"><div class="step-title">User Management</div><div class="step-desc">View all users, their roles, pet count, and last login. Activate or deactivate accounts. <span class="step-url">/admin/users</span></div></div></li>
+      <li class="step"><div class="step-num">4</div><div class="step-content"><div class="step-title">Reports</div><div class="step-desc">6-month trend charts for new users, new pets, and completed reminders. <span class="step-url">/admin/reports</span></div></div></li>
+    </ul>
+  </div>
+
+<hr class="divider">
+
+<!-- API REFERENCE -->
+<div id="api">
+  <div class="section-title">REST API Reference</div>
+  <div class="section-sub">All endpoints are under <code>http://localhost:8000/api/v1</code>. Authenticated routes require <code>Authorization: Bearer {token}</code></div>
+
+  <table style="margin-bottom:1.5rem">
+    <thead><tr><th>Method</th><th>Endpoint</th><th>Auth</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><code>POST</code></td><td><code>/auth/register</code></td><td>No</td><td>Register new user, returns token</td></tr>
+      <tr><td><code>POST</code></td><td><code>/auth/login</code></td><td>No</td><td>Login, returns Sanctum token</td></tr>
+      <tr><td><code>POST</code></td><td><code>/auth/logout</code></td><td>Yes</td><td>Revoke current token</td></tr>
+      <tr><td><code>GET</code></td><td><code>/auth/me</code></td><td>Yes</td><td>Get current user profile</td></tr>
+      <tr><td><code>GET</code></td><td><code>/dashboard</code></td><td>Yes</td><td>Dashboard stats and data</td></tr>
+      <tr><td><code>GET</code></td><td><code>/pets</code></td><td>Yes</td><td>List all pets</td></tr>
+      <tr><td><code>POST</code></td><td><code>/pets</code></td><td>Yes</td><td>Create a pet</td></tr>
+      <tr><td><code>GET</code></td><td><code>/pets/{id}</code></td><td>Yes</td><td>Get pet with health records</td></tr>
+      <tr><td><code>PUT</code></td><td><code>/pets/{id}</code></td><td>Yes</td><td>Update pet</td></tr>
+      <tr><td><code>DELETE</code></td><td><code>/pets/{id}</code></td><td>Yes</td><td>Delete pet (soft delete)</td></tr>
+      <tr><td><code>GET</code></td><td><code>/reminders</code></td><td>Yes</td><td>List reminders (filterable)</td></tr>
+      <tr><td><code>POST</code></td><td><code>/reminders</code></td><td>Yes</td><td>Create reminder</td></tr>
+      <tr><td><code>PUT</code></td><td><code>/reminders/{id}</code></td><td>Yes</td><td>Update reminder</td></tr>
+      <tr><td><code>DELETE</code></td><td><code>/reminders/{id}</code></td><td>Yes</td><td>Delete reminder</td></tr>
+      <tr><td><code>POST</code></td><td><code>/reminders/{id}/complete</code></td><td>Yes</td><td>Mark reminder as completed</td></tr>
+      <tr><td><code>POST</code></td><td><code>/reminders/{id}/snooze</code></td><td>Yes</td><td>Snooze reminder</td></tr>
+      <tr><td><code>GET</code></td><td><code>/notifications</code></td><td>Yes</td><td>List all notifications (paginated)</td></tr>
+      <tr><td><code>POST</code></td><td><code>/notifications/read-all</code></td><td>Yes</td><td>Mark all notifications as read</td></tr>
+    </tbody>
+  </table>
+
+  <div class="tip"><div class="tip-icon">🔑</div><div class="tip-text"><strong>How to get a token:</strong> POST to <code>/api/v1/auth/login</code> with <code>{"email":"demo@virtualpetcare.com","password":"password"}</code>. Use the returned <code>token</code> value in the Authorization header for all subsequent requests.</div></div>
+</div>
+
+<hr class="divider">
+
+<!-- TIPS & TROUBLESHOOTING -->
+<div id="tips">
+  <div class="section-title">Tips & Troubleshooting</div>
+  <div class="section-sub">Common questions and how to fix them</div>
+
+  <table>
+    <thead><tr><th>Issue</th><th>Cause</th><th>Fix</th></tr></thead>
+    <tbody>
+      <tr><td>Role does not exist error on register</td><td>Roles seeder not run</td><td>Run <code>php artisan db:seed</code> or <code>php artisan migrate:fresh --seed</code></td></tr>
+      <tr><td>Gmail SMTP auth error on register</td><td>Invalid App Password</td><td>Set <code>MAIL_MAILER=log</code> in .env for local dev</td></tr>
+      <tr><td>Notifications bell shows 0</td><td>No notifications seeded</td><td>Run <code>php artisan db:seed --class=DemoDataSeeder</code></td></tr>
+      <tr><td>Notification bell not updating</td><td>Config cache stale</td><td>Run <code>php artisan config:clear && php artisan cache:clear</code></td></tr>
+      <tr><td>Images not showing</td><td>Storage not linked</td><td>Run <code>php artisan storage:link</code></td></tr>
+      <tr><td>CSS not loading</td><td>Assets not built</td><td>Run <code>npm run build</code></td></tr>
+      <tr><td>403 on pet/reminder pages</td><td>Viewing another user's data</td><td>Each user can only see their own pets and reminders</td></tr>
+      <tr><td>Scheduler not running</td><td>Cron not set up</td><td>Add <code>* * * * * php artisan schedule:run</code> to crontab, or run <code>php artisan schedule:work</code> manually</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<hr class="divider">
+
+<!-- QUICK COMMANDS -->
+<div>
+  <div class="section-title">Quick Commands</div>
+  <div class="section-sub">Useful artisan commands for development</div>
+  <table>
+    <thead><tr><th>Command</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td><code>php artisan serve</code></td><td>Start the development server on port 8000</td></tr>
+      <tr><td><code>php artisan migrate:fresh --seed</code></td><td>Reset database and seed all demo data</td></tr>
+      <tr><td><code>php artisan db:seed</code></td><td>Seed roles, admin user, and demo data (without resetting)</td></tr>
+      <tr><td><code>php artisan permission:cache-reset</code></td><td>Clear the Spatie permission cache</td></tr>
+      <tr><td><code>php artisan reminders:generate-logs</code></td><td>Generate today's reminder log entries</td></tr>
+      <tr><td><code>php artisan reminders:send-notifications</code></td><td>Send notifications for due reminders</td></tr>
+      <tr><td><code>php artisan reminders:mark-missed</code></td><td>Mark past pending reminders as missed</td></tr>
+      <tr><td><code>php artisan schedule:work</code></td><td>Run the scheduler locally (runs every minute)</td></tr>
+      <tr><td><code>php artisan queue:work</code></td><td>Process queued jobs (needed if QUEUE_CONNECTION=database)</td></tr>
+      <tr><td><code>php artisan test</code></td><td>Run all 22 feature tests</td></tr>
+      <tr><td><code>npm run build</code></td><td>Build CSS and JS assets for production</td></tr>
+      <tr><td><code>npm run dev</code></td><td>Start Vite dev server with hot reload</td></tr>
+    </tbody>
+  </table>
+</div>
+
+</div><!-- end .container -->
+
+<footer>
+  <strong>Virtual Pet Care</strong> — Built with Laravel 11 · Tailwind CSS v4 · Alpine.js<br>
+  <span style="margin-top:.5rem;display:block">Demo: <strong>demo@virtualpetcare.com</strong> / password &nbsp;|&nbsp; Admin: <strong>admin@virtualpetcare.com</strong> / password</span>
+</footer>
+
+</body>
+</html>
