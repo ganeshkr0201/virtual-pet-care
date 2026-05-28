@@ -11,9 +11,9 @@
         <div class="absolute inset-0 opacity-10" style="background-image:radial-gradient(circle at 20% 50%,white 1px,transparent 1px);background-size:24px 24px"></div>
     </div>
     <div class="px-6 pb-6">
-        <div class="flex flex-col sm:flex-row sm:items-end gap-4 -mt-14">
+        <div class="flex flex-col sm:flex-row sm:items-end gap-4 -mt-14 relative z-10">
             <img src="{{ $pet->avatar_url }}" alt="{{ $pet->name }}"
-                 class="w-24 h-24 rounded-2xl object-cover border-4 border-white shadow-xl flex-shrink-0">
+                 class="w-24 h-24 rounded-2xl object-cover border-4 border-white dark:border-slate-800 shadow-xl flex-shrink-0">
             <div class="flex-1 pb-1">
                 <div class="flex items-center gap-3 flex-wrap">
                     <h2 class="text-2xl font-bold text-slate-900 dark:text-white">{{ $pet->name }}</h2>
@@ -36,14 +36,14 @@
 {{-- Stats --}}
 <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
     @foreach([
-        [$pet->age, 'Age', 'bg-violet-50', 'text-violet-600'],
-        [$pet->weight ? $pet->weight.' kg' : '—', 'Weight', 'bg-blue-50', 'text-blue-600'],
-        [$pet->reminders->count(), 'Reminders', 'bg-amber-50', 'text-amber-600'],
-        [$pet->vaccinations->count(), 'Vaccinations', 'bg-emerald-50', 'text-emerald-600'],
-    ] as [$val, $label, $bg, $color])
-    <div class="card p-4 text-center">
-        <p class="text-xl font-bold {{ $color }}">{{ $val }}</p>
-        <p class="text-xs text-slate-500 mt-1">{{ $label }}</p>
+        [$pet->age, 'Age', 'bg-violet-50/80 text-violet-600 dark:bg-violet-950/40 dark:text-violet-400 dark:border-violet-800/30'],
+        [$pet->weight ? $pet->weight.' kg' : '—', 'Weight', 'bg-blue-50/80 text-blue-600 dark:bg-blue-950/40 dark:text-blue-400 dark:border-blue-800/30'],
+        [$pet->reminders->count(), 'Reminders', 'bg-amber-50/80 text-amber-600 dark:bg-amber-950/40 dark:text-amber-400 dark:border-amber-800/30'],
+        [$pet->vaccinations->count(), 'Vaccinations', 'bg-emerald-50/80 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400 dark:border-emerald-800/30'],
+    ] as [$val, $label, $colors])
+    <div class="card p-4 text-center border-l-4 border-l-current {{ $colors }} flex flex-col justify-center items-center">
+        <p class="text-2xl font-bold leading-tight">{{ $val }}</p>
+        <p class="text-xs font-semibold uppercase tracking-wider mt-1 opacity-70">{{ $label }}</p>
     </div>
     @endforeach
 </div>

@@ -23,5 +23,10 @@ class AppServiceProvider extends ServiceProvider
         Password::defaults(function () {
             return Password::min(8);
         });
+
+        // Diagnostic SQL Query Logging
+        \Illuminate\Support\Facades\DB::listen(function ($query) {
+            \Illuminate\Support\Facades\Log::info("SQL Query: {$query->sql} | Time: {$query->time}ms");
+        });
     }
 }

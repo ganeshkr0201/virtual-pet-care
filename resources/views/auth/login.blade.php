@@ -2,8 +2,8 @@
 @section('title', 'Sign In')
 @section('content')
     <div class="mb-7">
-        <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Welcome back 👋</h2>
-        <p class="text-slate-500 text-sm mt-1.5">Sign in to manage your pets</p>
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Welcome back 👋</h2>
+        <p class="text-slate-500 dark:text-slate-400 text-sm mt-1.5">Sign in to manage your pets</p>
     </div>
 
     <form method="POST" action="{{ route('login') }}" class="space-y-5">
@@ -18,7 +18,7 @@
         <div>
             <div class="flex items-center justify-between mb-1.5">
                 <label for="password" class="form-label mb-0">Password</label>
-                <a href="{{ route('password.request') }}" class="text-xs text-primary-600 hover:text-primary-700 font-medium">Forgot password?</a>
+                <a href="{{ route('password.request') }}" class="text-xs text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-medium">Forgot password?</a>
             </div>
             <input id="password" type="password" name="password" required
                    class="form-input @error('password') border-red-400 @enderror"
@@ -27,8 +27,8 @@
         </div>
         <div class="flex items-center gap-2.5">
             <input id="remember" type="checkbox" name="remember"
-                   class="w-4 h-4 rounded border-slate-300 text-primary-600 focus:ring-primary-500">
-            <label for="remember" class="text-sm text-slate-600 select-none">Remember me for 30 days</label>
+                   class="w-4 h-4 rounded border-slate-300 dark:border-slate-700 text-primary-600 dark:bg-slate-950 focus:ring-primary-500">
+            <label for="remember" class="text-sm text-slate-600 dark:text-slate-400 select-none">Remember me for 30 days</label>
         </div>
         <button type="submit" class="btn-primary btn-lg w-full mt-2">
             Sign in to your account
@@ -36,12 +36,12 @@
     </form>
 
     <div class="relative my-6">
-        <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-slate-100"></div></div>
-        <div class="relative flex justify-center"><span class="bg-white px-3 text-xs text-slate-400">or</span></div>
+        <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-slate-100 dark:border-slate-800"></div></div>
+        <div class="relative flex justify-center"><span class="bg-white dark:bg-slate-900 px-3 text-xs text-slate-400 dark:text-slate-500">or</span></div>
     </div>
 
-    <p class="text-center text-sm text-slate-500">
+    <p class="text-center text-sm text-slate-500 dark:text-slate-400">
         Don't have an account?
-        <a href="{{ route('register') }}" class="text-primary-600 font-semibold hover:text-primary-700">Create one free →</a>
+        <a href="{{ route('register') }}" class="text-primary-600 dark:text-primary-400 font-semibold hover:text-primary-700 dark:hover:text-primary-300">Create one free →</a>
     </p>
 @endsection

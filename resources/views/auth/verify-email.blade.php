@@ -5,8 +5,8 @@
 @section('content')
     <div class="text-center mb-6">
         <div class="text-5xl mb-4">📧</div>
-        <h2 class="text-2xl font-bold text-slate-900">Verify your email</h2>
-        <p class="text-slate-500 text-sm mt-2">
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Verify your email</h2>
+        <p class="text-slate-500 dark:text-slate-400 text-sm mt-2">
             We sent a verification link to <strong>{{ auth()->user()->email }}</strong>.
             Please check your inbox and click the link to activate your account.
         </p>
@@ -23,6 +23,6 @@
 
     <form method="POST" action="{{ route('logout') }}" class="mt-4">
         @csrf
-        <button type="submit" class="btn-ghost w-full text-sm text-slate-500">Sign out</button>
+        <button type="submit" class="btn-ghost w-full text-sm text-slate-500 dark:text-slate-400">Sign out</button>
     </form>
 @endsection

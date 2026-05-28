@@ -4,8 +4,8 @@
 
 @section('content')
     <div class="mb-6">
-        <h2 class="text-2xl font-bold text-slate-900">Set new password</h2>
-        <p class="text-slate-500 text-sm mt-1">Choose a strong password for your account</p>
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Set new password</h2>
+        <p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Choose a strong password for your account</p>
     </div>
 
     <form method="POST" action="{{ route('password.update') }}" class="space-y-4">

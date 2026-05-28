@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 @plugin "@tailwindcss/forms";
 @plugin "@tailwindcss/typography";
 
@@ -40,34 +41,43 @@ body { font-family:var(--font-sans); background:#f1f5f9; color:#1e293b; line-hei
 ::-webkit-scrollbar-thumb:hover { background:#94a3b8 }
 
 /* ─── Buttons ────────────────────────────────────────────────────── */
-.btn {
+.btn, .btn-primary, .btn-secondary, .btn-danger, .btn-ghost, .btn-success {
     display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
     padding:.5rem 1.125rem; border-radius:.875rem; font-weight:600; font-size:.875rem;
-    transition:all .18s cubic-bezier(.4,0,.2,1); outline:none; cursor:pointer;
-    border:none; white-space:nowrap; letter-spacing:-.01em;
+    transition:all .2s cubic-bezier(.4,0,.2,1); outline:none; cursor:pointer;
+    border:1px solid transparent; white-space:nowrap; letter-spacing:-.01em;
+    text-decoration:none;
 }
-.btn:disabled { opacity:.5; cursor:not-allowed; pointer-events:none }
-.btn:active   { transform:scale(.97) }
+.btn:disabled, .btn-primary:disabled, .btn-secondary:disabled, .btn-danger:disabled, .btn-ghost:disabled, .btn-success:disabled { opacity:.5; cursor:not-allowed; pointer-events:none }
+.btn:hover, .btn-primary:hover, .btn-secondary:hover, .btn-danger:hover, .btn-ghost:hover, .btn-success:hover { transform:translateY(-1.5px) }
+.btn:active, .btn-primary:active, .btn-secondary:active, .btn-danger:active, .btn-ghost:active, .btn-success:active { transform:translateY(0) scale(.96) }
 
 .btn-primary {
     background:linear-gradient(135deg,#4F46E5,#7C3AED);
-    color:#fff; box-shadow:0 2px 8px rgba(79,70,229,.35);
+    color:#fff; box-shadow:0 4px 12px rgba(79,70,229,.25);
 }
-.btn-primary:hover { box-shadow:0 4px 16px rgba(79,70,229,.45); filter:brightness(1.05) }
+.btn-primary:hover { box-shadow:0 8px 20px rgba(79,70,229,.35); filter:brightness(1.04); color:#fff }
 
 .btn-secondary {
     background:#fff; color:#374151;
     border:1.5px solid #e2e8f0; box-shadow:0 1px 3px rgba(0,0,0,.06);
 }
-.btn-secondary:hover { background:#f8fafc; border-color:#c7d2fe; color:#4F46E5 }
+.btn-secondary:hover { background:#f8fafc; border-color:#c7d2fe; color:#4F46E5; box-shadow:0 4px 12px rgba(79,70,229,.05) }
 
-.btn-danger { background:linear-gradient(135deg,#ef4444,#dc2626); color:#fff; box-shadow:0 2px 8px rgba(239,68,68,.3) }
-.btn-danger:hover { filter:brightness(1.08) }
+.btn-danger {
+    background:linear-gradient(135deg,#ef4444,#dc2626);
+    color:#fff; box-shadow:0 4px 12px rgba(239,68,68,.2);
+}
+.btn-danger:hover { box-shadow:0 8px 20px rgba(239,68,68,.3); filter:brightness(1.05); color:#fff }
 
 .btn-ghost { background:transparent; color:#64748b }
 .btn-ghost:hover { background:#f1f5f9; color:#1e293b }
 
-.btn-success { background:linear-gradient(135deg,#10b981,#059669); color:#fff; box-shadow:0 2px 8px rgba(16,185,129,.3) }
+.btn-success {
+    background:linear-gradient(135deg,#10b981,#059669);
+    color:#fff; box-shadow:0 4px 12px rgba(16,185,129,.2);
+}
+.btn-success:hover { box-shadow:0 8px 20px rgba(16,185,129,.3); color:#fff }
 
 .btn-sm  { padding:.375rem .875rem; font-size:.8rem; border-radius:.625rem }
 .btn-lg  { padding:.75rem 1.75rem; font-size:1rem; border-radius:1rem }

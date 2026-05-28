@@ -48,11 +48,21 @@ class DashboardService
             ->orderBy('next_due_date')
             ->get();
 
-        // Weekly stats
+        // Weekly stats (Optimized: Single query to fetch 7 days of logs, filtered in memory)
+        $sevenDaysAgo = now()->subDays(6)->toDateString();
+        $weeklyLogs = ReminderLog::where('user_id', $userId)
+            ->where('scheduled_date', '>=', $sevenDaysAgo)
+            ->get();
+
         $weeklyStats = [];
         for ($i = 6; $i >= 0; $i--) {
             $date = now()->subDays($i)->toDateString();
-            $dayLogs = ReminderLog::where('user_id', $userId)->where('scheduled_date', $date)->get();
+            $dayLogs = $weeklyLogs->filter(function ($log) use ($date) {
+                $logDate = $log->scheduled_date instanceof \Carbon\Carbon 
+                    ? $log->scheduled_date->toDateString() 
+                    : substr((string)$log->scheduled_date, 0, 10);
+                return $logDate === $date;
+            });
             $weeklyStats[] = [
                 'date' => $date,
                 'day' => now()->subDays($i)->format('D'),

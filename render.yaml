@@ -1,0 +1,84 @@
+services:
+  # =========================================================================
+  # 1. Laravel Web Application (Web Service)
+  # =========================================================================
+  - type: web
+    name: virtual-pet-care
+    env: docker
+    plan: free
+    dockerfilePath: Dockerfile
+    healthCheckPath: /
+    numInstances: 1
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      
+      # Paste your local APP_KEY from .env here or let Render prompt you
+      - key: APP_KEY
+        sync: false
+        placeholder: "base64:hHZsNx+xFdzL7KB313IGcEZEdeWnBOhQsVwHn6Zx3KE="
+
+      - key: APP_URL
+        value: https://virtual-pet-care.onrender.com # Change to your custom domain or final Render URL
+
+      # ─── Database Link (Automatically injected by Render) ───
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        fromDatabase:
+          name: virtual-pet-care-db
+          property: host
+      - key: DB_PORT
+        value: "5432"
+      - key: DB_DATABASE
+        fromDatabase:
+          name: virtual-pet-care-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: virtual-pet-care-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: virtual-pet-care-db
+          property: password
+      - key: DB_SSLMODE
+        value: require
+
+      # ─── Laravel Production Settings ───
+      - key: SESSION_DRIVER
+        value: database
+      - key: CACHE_STORE
+        value: database
+      - key: QUEUE_CONNECTION
+        value: database
+
+      # ─── Mail Settings (Configure these in Render Dashboard for email reminder support) ───
+      - key: MAIL_MAILER
+        value: smtp
+      - key: MAIL_HOST
+        value: smtp.gmail.com
+      - key: MAIL_PORT
+        value: "587"
+      - key: MAIL_USERNAME
+        sync: false
+        placeholder: "your-email@gmail.com"
+      - key: MAIL_PASSWORD
+        sync: false
+        placeholder: "your-16-character-app-password"
+      - key: MAIL_FROM_ADDRESS
+        sync: false
+        placeholder: "your-email@gmail.com"
+      - key: MAIL_FROM_NAME
+        value: "Virtual Pet Care"
+
+# ===========================================================================
+# 2. Production PostgreSQL Database (Free Tier)
+# ===========================================================================
+databases:
+  - name: virtual-pet-care-db
+    databaseName: virtual_pet_care
+    user: pet_care_admin
+    plan: free

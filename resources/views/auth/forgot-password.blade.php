@@ -4,8 +4,8 @@
 
 @section('content')
     <div class="mb-6">
-        <h2 class="text-2xl font-bold text-slate-900">Reset your password</h2>
-        <p class="text-slate-500 text-sm mt-1">Enter your email and we'll send you a reset link</p>
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Reset your password</h2>
+        <p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Enter your email and we'll send you a reset link</p>
     </div>
 
     @if(session('status'))
@@ -33,7 +33,7 @@
         </button>
     </form>
 
-    <p class="text-center text-sm text-slate-500 mt-6">
-        <a href="{{ route('login') }}" class="text-primary-600 font-medium hover:underline">← Back to sign in</a>
+    <p class="text-center text-sm text-slate-500 dark:text-slate-400 mt-6">
+        <a href="{{ route('login') }}" class="text-primary-600 dark:text-primary-400 font-medium hover:underline">← Back to sign in</a>
     </p>
 @endsection

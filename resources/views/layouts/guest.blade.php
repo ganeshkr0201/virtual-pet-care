@@ -1,13 +1,16 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data x-bind:class="$store.darkMode.on ? 'dark' : ''">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Welcome') — Virtual Pet Care</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script>
+        document.documentElement.classList.toggle('dark', localStorage.getItem('darkMode') === 'true');
+    </script>
 </head>
-<body class="min-h-screen flex" style="background:linear-gradient(135deg,#f0f4ff 0%,#faf5ff 50%,#f0fdfa 100%)">
+<body class="min-h-screen flex bg-gradient-to-br from-indigo-50/50 via-purple-50/50 to-teal-50/50 dark:from-slate-950 dark:via-slate-950 dark:to-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-200">
 
     {{-- Left decorative panel (hidden on mobile) --}}
     <div class="hidden lg:flex lg:w-1/2 xl:w-5/12 flex-col justify-between p-12 relative overflow-hidden"
@@ -64,24 +67,24 @@
                     <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl shadow-lg"
                          style="background:linear-gradient(135deg,#4F46E5,#7C3AED)">🐾</div>
                     <div class="text-left">
-                        <div class="font-bold text-slate-900 text-lg">Virtual Pet Care</div>
-                        <div class="text-xs text-slate-400">Your pet's health companion</div>
+                        <div class="font-bold text-slate-900 dark:text-white text-lg">Virtual Pet Care</div>
+                        <div class="text-xs text-slate-400 dark:text-slate-500">Your pet's health companion</div>
                     </div>
                 </a>
             </div>
 
             {{-- Card --}}
-            <div class="bg-white rounded-3xl shadow-2xl shadow-slate-200/60 border border-slate-100 p-8">
+            <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl shadow-slate-200/60 dark:shadow-slate-950/60 border border-slate-100 dark:border-slate-800 p-8">
                 @yield('content')
             </div>
 
             {{-- Footer links --}}
-            <div class="text-center mt-6 text-sm text-slate-400 flex items-center justify-center gap-4">
-                <a href="{{ route('home') }}" class="hover:text-primary-600 transition-colors">Home</a>
-                <span class="text-slate-200">·</span>
-                <a href="{{ route('contact') }}" class="hover:text-primary-600 transition-colors">Contact</a>
-                <span class="text-slate-200">·</span>
-                <a href="{{ route('about') }}" class="hover:text-primary-600 transition-colors">About</a>
+            <div class="text-center mt-6 text-sm text-slate-400 dark:text-slate-500 flex items-center justify-center gap-4">
+                <a href="{{ route('home') }}" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Home</a>
+                <span class="text-slate-200 dark:text-slate-800">·</span>
+                <a href="{{ route('contact') }}" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Contact</a>
+                <span class="text-slate-200 dark:text-slate-800">·</span>
+                <a href="{{ route('about') }}" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">About</a>
             </div>
         </div>
     </div>

@@ -60,8 +60,8 @@ class Pet extends Model
     {
         if (!$this->date_of_birth) return 'Unknown';
         $dob = Carbon::parse($this->date_of_birth);
-        $years = $dob->diffInYears(now());
-        $months = $dob->diffInMonths(now()) % 12;
+        $years = (int)$dob->diffInYears(now());
+        $months = (int)($dob->diffInMonths(now()) % 12);
         if ($years > 0) {
             return $years . ' yr' . ($years > 1 ? 's' : '') . ($months > 0 ? ' ' . $months . ' mo' : '');
         }

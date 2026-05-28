@@ -2,8 +2,8 @@
 @section('title', 'Create Account')
 @section('content')
     <div class="mb-7">
-        <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Create your account 🐾</h2>
-        <p class="text-slate-500 text-sm mt-1.5">Start caring for your pets better today — it's free</p>
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Create your account 🐾</h2>
+        <p class="text-slate-500 dark:text-slate-400 text-sm mt-1.5">Start caring for your pets better today — it's free</p>
     </div>
 
     <form method="POST" action="{{ route('register') }}" class="space-y-4">
@@ -36,8 +36,8 @@
         </button>
     </form>
 
-    <p class="text-center text-sm text-slate-500 mt-6">
+    <p class="text-center text-sm text-slate-500 dark:text-slate-400 mt-6">
         Already have an account?
-        <a href="{{ route('login') }}" class="text-primary-600 font-semibold hover:text-primary-700">Sign in →</a>
+        <a href="{{ route('login') }}" class="text-primary-600 dark:text-primary-400 font-semibold hover:text-primary-700 dark:hover:text-primary-300">Sign in →</a>
     </p>
 @endsection

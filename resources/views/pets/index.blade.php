@@ -10,9 +10,9 @@
         <h2 class="page-title">My Pets</h2>
         <p class="page-subtitle">{{ $pets->total() }} pet{{ $pets->total() !== 1 ? 's' : '' }} registered</p>
     </div>
-    <a href="{{ route('pets.create') }}" class="btn-primary">
+    <a href="{{ route('pets.create') }}" class="btn-primary flex items-center gap-2 hover:-translate-y-0.5 active:scale-95 transition-all duration-150 shadow-lg shadow-indigo-500/20 dark:shadow-indigo-950/40">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-        Add Pet
+        <span>Add Pet</span>
     </a>
 </div>
 
@@ -52,20 +52,20 @@
             </div>
 
             {{-- Action buttons --}}
-            <div class="flex gap-2">
-                <button type="submit" class="btn-primary flex-1 sm:flex-none">
+            <div class="flex gap-2 w-full sm:w-auto">
+                <button type="submit" class="btn-primary flex-1 sm:flex-none flex items-center gap-2 justify-center hover:-translate-y-0.5 active:scale-95 transition-all duration-150 shadow-md shadow-indigo-500/10 dark:shadow-indigo-950/30">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L13 13.414V19a1 1 0 01-.553.894l-4 2A1 1 0 017 21v-7.586L3.293 6.707A1 1 0 013 6V4z"/>
                     </svg>
-                    Filter
+                    <span>Filter</span>
                 </button>
                 @if(request()->hasAny(['search','species']))
                 <a href="{{ route('pets.index') }}"
-                   class="btn-secondary flex items-center gap-1.5">
+                   class="btn-secondary flex items-center gap-2 justify-center hover:-translate-y-0.5 active:scale-95 transition-all duration-150">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                     </svg>
-                    Clear
+                    <span>Clear</span>
                 </a>
                 @endif
             </div>
@@ -76,15 +76,15 @@
 {{-- Species quick-filter pills --}}
 @if($speciesStats->count() > 0)
 <div class="flex flex-wrap gap-2 items-center">
-    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider mr-1">Quick filter:</span>
+    <span class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mr-1">Quick filter:</span>
     <a href="{{ route('pets.index') }}"
-       class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-sm font-semibold transition-all
+       class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-all hover:-translate-y-0.5 active:scale-95 duration-150
               {{ !request('species')
-                 ? 'text-white shadow-md shadow-primary-200'
-                 : 'bg-white text-slate-600 border border-slate-200 hover:border-primary-300 hover:text-primary-600' }}"
+                 ? 'text-white shadow-md shadow-indigo-500/20 dark:shadow-indigo-950/40'
+                 : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:border-primary-300 dark:hover:border-primary-500 hover:text-primary-600 dark:hover:text-primary-400' }}"
        style="{{ !request('species') ? 'background:linear-gradient(135deg,#4F46E5,#7C3AED)' : '' }}">
         🐾 All
-        <span class="text-xs {{ !request('species') ? 'bg-white/25 text-white' : 'bg-slate-100 text-slate-500' }} rounded-full px-1.5 py-0.5 font-bold">
+        <span class="text-xs {{ !request('species') ? 'bg-white/25 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400' }} rounded-full px-2 py-0.5 font-bold transition-colors">
             {{ $speciesStats->sum('count') }}
         </span>
     </a>
@@ -94,13 +94,13 @@
     @foreach($speciesStats as $stat)
     @php $active = request('species') === $stat->species; @endphp
     <a href="{{ route('pets.index', ['species' => $stat->species]) }}"
-       class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-sm font-semibold transition-all capitalize
+       class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-all capitalize hover:-translate-y-0.5 active:scale-95 duration-150
               {{ $active
-                 ? 'text-white shadow-md shadow-primary-200'
-                 : 'bg-white text-slate-600 border border-slate-200 hover:border-primary-300 hover:text-primary-600' }}"
+                 ? 'text-white shadow-md shadow-indigo-500/20 dark:shadow-indigo-950/40'
+                 : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:border-primary-300 dark:hover:border-primary-500 hover:text-primary-600 dark:hover:text-primary-400' }}"
        style="{{ $active ? 'background:linear-gradient(135deg,#4F46E5,#7C3AED)' : '' }}">
         {{ $speciesEmoji[$stat->species] ?? '🐾' }} {{ ucfirst($stat->species) }}
-        <span class="text-xs {{ $active ? 'bg-white/25 text-white' : 'bg-slate-100 text-slate-500' }} rounded-full px-1.5 py-0.5 font-bold">
+        <span class="text-xs {{ $active ? 'bg-white/25 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400' }} rounded-full px-2 py-0.5 font-bold transition-colors">
             {{ $stat->count }}
         </span>
     </a>
@@ -141,14 +141,17 @@
                 <span class="badge badge-gray">{{ $pet->gender === 'male' ? '♂ Male' : ($pet->gender === 'female' ? '♀ Female' : '⚥') }}</span>
             </div>
             <div class="flex gap-2 mt-auto">
-                <a href="{{ route('pets.show', $pet) }}" class="btn-primary btn-sm flex-1 justify-center">View Profile</a>
-                <a href="{{ route('pets.edit', $pet) }}" class="btn-secondary btn-sm">
+                <a href="{{ route('pets.show', $pet) }}" class="btn-primary btn-sm flex-1 justify-center flex items-center gap-1.5 hover:-translate-y-0.5 active:scale-95 transition-all duration-150 shadow-sm shadow-indigo-500/10 dark:shadow-indigo-950/30">
+                    <span>View Profile</span>
+                </a>
+                <a href="{{ route('pets.edit', $pet) }}" class="btn-secondary btn-sm flex items-center justify-center hover:-translate-y-0.5 active:scale-95 transition-all duration-150">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                 </a>
                 <form method="POST" action="{{ route('pets.destroy', $pet) }}"
-                      onsubmit="return confirm('Delete {{ $pet->name }}? This cannot be undone.')">
+                      onsubmit="return confirm('Delete {{ $pet->name }}? This cannot be undone.')"
+                      class="flex">
                     @csrf @method('DELETE')
-                    <button type="submit" class="btn-ghost btn-sm text-red-500 hover:bg-red-50">
+                    <button type="submit" class="btn-ghost btn-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 flex items-center justify-center hover:-translate-y-0.5 active:scale-95 transition-all duration-150">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                     </button>
                 </form>
